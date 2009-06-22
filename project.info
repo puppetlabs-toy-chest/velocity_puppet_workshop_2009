@@ -1,0 +1,7 @@
+company: Reductive Labs 
+title: Introduction to Managed Infrastructure with Puppet
+footer:  <img src="images/Reductive-100.png" alt="Reductive Labs" align=bottom> &copy; Reductive Labs 2009
+
+<% content_for :css do %>
+#footer { padding: 3em 0;}
+<% end %>

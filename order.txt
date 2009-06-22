@@ -1,0 +1,16 @@
+Introduction to Managed Infrastructures with Puppet
+Goals
+Introduction to Puppet
+Resources
+Language
+Executables
+Your First Puppet Script
+Your Second Puppet Script
+Puppet Classes
+Including Classes
+A Puppet Repository
+Your First Module
+# Using the Module
+# Your First Node
+# Managing Sudo
+# Bootstrapping Puppet
