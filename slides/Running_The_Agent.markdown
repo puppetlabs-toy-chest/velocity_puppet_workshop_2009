@@ -1,11 +1,8 @@
-<% code :lang => "shell-unix-generic" do %>puppetd --test --confdir /tmp/server --vardir /tmp/server --server $hostname<% end %>
+<% code :lang => "shell-unix-generic" do %>sudo puppetd --test --confdir /tmp/server --vardir /tmp/server --server localhost<% end %>
 
-Produces: <% code :lang => "shell-unix-generic" do %>info: Starting server for Puppet version 0.24.8
-info: Creating a new certificate request for phage.local
-info: Creating a new SSL key at /tmp/server/ssl/private_keys/phage.local.pem
-info: Autosign is enabled but /tmp/server/autosign.conf is missing
-info: Signing certificate for CA server
-info: Signing certificate for phage.local
-info: Listening on port 8140
-notice: Starting Puppet server version 0.24.8
-<% end %>
+Produces: <% code :lang => "shell-unix-generic" do %>info: Caching catalog at /tmp/server/state/localconfig.yaml
+notice: Starting catalog run
+notice: //Node[default]/foo/File[/tmp/foo]/ensure: created
+notice: Finished catalog run in 0.01 seconds<% end %>
+
+Note that we're running as root

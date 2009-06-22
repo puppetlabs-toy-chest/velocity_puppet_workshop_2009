@@ -1,4 +1,6 @@
-<% code :lang => "shell-unix-generic" do %>puppetmasterd --verbose --no-daemonize --modulepath $PWD/repo/modules --confdir /tmp/server --vardir /tmp/server $PWD/repo/manifests/site.pp<% end %>
+<% code :lang => "shell-unix-generic" do %>puppetmasterd --verbose --no-daemonize --modulepath $PWD/repo/modules \
+--confdir /tmp/server --vardir /tmp/server \
+--manifest $PWD/repo/manifests/site.pp --certdnsnames localhost<% end %>
 
 Produces: <% code :lang => "shell-unix-generic" do %>info: Starting server for Puppet version 0.24.8
 info: Creating a new certificate request for phage.local
@@ -7,5 +9,6 @@ info: Autosign is enabled but /tmp/server/autosign.conf is missing
 info: Signing certificate for CA server
 info: Signing certificate for phage.local
 info: Listening on port 8140
-notice: Starting Puppet server version 0.24.8
-<% end %>
+notice: Starting Puppet server version 0.24.8<% end %>
+
+Usually runs as 'puppet' but doesn't have to.
