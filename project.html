@@ -1,0 +1,794 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+   
+
+	  <title>Introduction to Managed Infrastructure with Puppet</title>
+
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow">
+<!-- style sheet links -->
+<link rel="stylesheet" href="project.css" type="text/css" media="projection" id="slideProj">
+<link rel="stylesheet" href="s6/outline.css" type="text/css" media="screen" id="outlineStyle">
+<link rel="stylesheet" href="s6/print.css" type="text/css" media="print" id="slidePrint">
+
+<!-- S6 JS -->
+<script src="s6/jquery.js" type="text/javascript"></script>
+<script src="s6/slides.js" type="text/javascript"></script>
+
+  
+
+</head>
+<body>
+
+<div class="layout">
+  
+  <div class="background">  
+    <object data="project.svg" width="100%" height="100%">
+		</object>
+  </div>   
+  
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1><img src="images/Reductive-100.png" alt="Reductive Labs" align=bottom> &copy; Reductive Labs 2009</h1>
+<h2></h2>
+</div>
+
+      <div id='microsoft'>       
+        <p>
+          Microsoft's Internet Explorer browser
+            has no built-in vector graphics machinery
+             required for "loss-free" gradient background themes.
+        </p>        
+        <p>
+          Please upgrade to a better browser
+           such as <a href='http://getfirefox.com'>Firefox</a>, <a href='http://www.opera.com/download'>Opera</a>,
+            <a href='http://google.com/chrome'>Chrome</a>, <a href='http://apple.com/safari/download'>Safari</a> or others
+            with built-in vector graphics machinery and much more.
+          
+          (Learn more or post questions or comments
+              at the <a href='http://slideshow.rubyforge.org'>Slide Show (S9)</a>
+            project site. Thanks!)
+        </p>             
+    </div>
+</div>
+
+<div class="presentation">
+<div class='slide'>
+
+<h1>Introduction to Managed Infrastructures with Puppet</h1>
+
+<blockquote>
+    <p>by Luke Kanies</p>
+    
+    <p>Reductive Labs, Inc.</p>
+    
+    <p>luke@reductivelabs.com</p>
+</blockquote>
+
+<p>Presentation available at <code>git://github.com/reductivelabs/velocity_puppet_workshop_2009.git</code></p>
+
+
+
+</div><div class='slide'>
+
+<h1>Goals</h1>
+
+<ul>
+<li>Get an Introduction to Puppet</li>
+<li>Build a simple Puppet Repository</li>
+<li>Know how to use the tools</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>Introduction to Puppet</h1>
+
+<ul>
+<li>It's all about Resources</li>
+<li>We've got a custom language</li>
+<li>Some executables</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Getting Help</h1>
+
+<ul>
+<li><code>#puppet</code> on irc.freenode.net</li>
+<li><a href="http://groups.google.com/group/puppet-users">http://groups.google.com/group/puppet-users</a></li>
+<li>Support Contracts :)</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Resources</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic", :name=>"examples/ralsh.sh"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> ralsh package
+<span class="line-numbers">   2 </span> ralsh user luke
+<span class="line-numbers">   3 </span> ralsh user foo
+<span class="line-numbers">   4 </span> ralsh user foo ensure=present shell=/bin/bash home=/Users/foo
+<span class="line-numbers">   5 </span> ralsh user foo shell=/usr/bin/bash
+<span class="line-numbers">   6 </span> ralsh user foo ensure=absent
+</pre></pre>
+
+<div class="codeurl">examples/ralsh.sh</div>
+
+<p><!-- end code --></p>
+
+<p>Try <code>ralsh package</code>.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Language</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"examples/language.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/example_file<span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   2 </span>     <span class="UserDefinedConstant">ensure </span>=&gt; present
+<span class="line-numbers">   3 </span>     <span class="UserDefinedConstant">content </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>This is a test<span class="CharacterConstant">\n</span><span class="Punctuation">&quot;</span></span>,
+<span class="line-numbers">   4 </span>     <span class="UserDefinedConstant">mode </span>=&gt; 640
+<span class="line-numbers">   5 </span> }
+</pre></pre>
+
+<div class="codeurl">examples/language.pp</div>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Executables</h1>
+
+<ul>
+<li><code>puppet</code></li>
+<li><code>ralsh</code></li>
+<li><code>puppetd</code></li>
+<li><code>puppetmasterd</code></li>
+<li><code>puppetca</code></li>
+</ul>
+
+<p>There are more, but this is all we're covering today</p>
+
+
+
+</div><div class='slide'>
+
+<h1>Your First Puppet Script</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppet -e <span class="String"><span class="Punctuation">'</span>file { &quot;/tmp/eh&quot;: ensure =&gt; present }<span class="Punctuation">'</span></span>
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> notice: //File[/tmp/eh]/ensure: created 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Try it twice.  Try it with --noop.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Your Second Puppet Script</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppet -e <span class="String"><span class="Punctuation">'</span>file { &quot;/tmp/eh&quot;: ensure =&gt; absent }<span class="Punctuation">'</span></span>
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> notice: //File[/tmp/eh]: Filebucketed to  with sum d41d8cd98f00b204e9800998ecf8427e
+<span class="line-numbers">   2 </span> notice: //File[/tmp/eh]/ensure: removed 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Puppet Classes</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"examples/class_but_no_include.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">class</span> <span class="ClassName">foo</span> {
+<span class="line-numbers">   2 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/foo<span class="Punctuation">&quot;</span></span>: <span class="UserDefinedConstant">ensure </span>=&gt; present }
+<span class="line-numbers">   3 </span> }
+</pre></pre>
+
+<div class="codeurl">examples/class_but_no_include.pp</div>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span>  
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Including Classes</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"examples/class_with_include.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">class</span> <span class="ClassName">foo</span> {
+<span class="line-numbers">   2 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/foo<span class="Punctuation">&quot;</span></span>: <span class="UserDefinedConstant">ensure </span>=&gt; present }
+<span class="line-numbers">   3 </span> }
+<span class="line-numbers">   4 </span> <span class="ControlKeyword">include</span> foo
+</pre></pre>
+
+<div class="codeurl">examples/class_with_include.pp</div>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> notice: //foo/File[/tmp/foo]/ensure: created 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>A Puppet Repository</h1>
+
+<p>Basic Repository Structure:
+<!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> manifests/site.pp
+<span class="line-numbers">   2 </span> modules/
+<span class="line-numbers">   3 </span> modules/mymod/manifests/init.pp
+<span class="line-numbers">   4 </span> modules/mymod/templates/mytemplate.erb
+<span class="line-numbers">   5 </span> modules/mymod/plugins/puppet/parser/functions/myfunction.rb
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Your First Module</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> mkdir repo
+<span class="line-numbers">   2 </span> mkdir -p repo/manifests repo/modules/foo/manifests
+<span class="line-numbers">   3 </span> cp examples/class_but_no_include.pp repo/modules/foo/manifests/init.pp
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>To use: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppet --modulepath repo/modules -e <span class="String"><span class="Punctuation">'</span>include foo<span class="Punctuation">'</span></span>
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Your First Node</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"repo/manifests/site.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">node</span> <span class="ClassName">default</span> {
+<span class="line-numbers">   2 </span>     <span class="ControlKeyword">include</span> foo
+<span class="line-numbers">   3 </span> }
+</pre></pre>
+
+<div class="codeurl">repo/manifests/site.pp</div>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Putting It Together</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppet --modulepath repo/modules repo/manifests/site.pp
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>You now have a "complete" Puppet repository, ready to extend.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>Starting The Server</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppetmasterd --verbose --no-daemonize --modulepath <span class="Variable"><span class="Punctuation">$</span>PWD</span>/repo/modules \
+<span class="line-numbers">   2 </span> --confdir /tmp/server --vardir /tmp/server \
+<span class="line-numbers">   3 </span> --manifest <span class="Variable"><span class="Punctuation">$</span>PWD</span>/repo/manifests/site.pp --certdnsnames localhost
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> info: Starting server <span class="ControlKeyword">for</span> Puppet version 0.24.8
+<span class="line-numbers">   2 </span> info: Creating a new certificate request <span class="ControlKeyword">for</span> phage.local
+<span class="line-numbers">   3 </span> info: Creating a new SSL key at /tmp/server/ssl/private_keys/phage.local.pem
+<span class="line-numbers">   4 </span> info: Autosign is enabled but /tmp/server/autosign.conf is missing
+<span class="line-numbers">   5 </span> info: Signing certificate <span class="ControlKeyword">for</span> CA server
+<span class="line-numbers">   6 </span> info: Signing certificate <span class="ControlKeyword">for</span> phage.local
+<span class="line-numbers">   7 </span> info: Listening on port 8140
+<span class="line-numbers">   8 </span> notice: Starting Puppet server version 0.24.8
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Usually runs as 'puppet' but doesn't have to.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Server Arguments</h1>
+
+<ul>
+<li><code>--verbose</code>: Provide extra logging</li>
+<li><code>--no-daemonize</code>: Do not background</li>
+<li><code>--modulepath $PWD/repo/modules</code>: Specify where to find our modules</li>
+<li><code>--confdir /tmp/server</code>: Use a non-standard configuration directory</li>
+<li><code>--vardir /tmp/server</code>: Use a non-standard state/var directory</li>
+<li><code>--manifest $PWD/repo/manifests/site.pp</code>: Specify the starting manifest to parse</li>
+<li><code>--certdnsnames localhost</code>: Configure <code>localhost</code> as an alias in the SSL Certificate</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Default Server Arguments</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic", :name=>"examples/default_server_arguments.sh"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppetmasterd --configprint modulepath
+<span class="line-numbers">   2 </span> puppetmasterd --configprint confdir
+<span class="line-numbers">   3 </span> puppetmasterd --configprint vardir
+</pre></pre>
+
+<div class="codeurl">examples/default_server_arguments.sh</div>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> /opt/rl/dist/apps/puppet/modules:/usr/share/puppet/modules
+<span class="line-numbers">   2 </span> /etc/puppet
+<span class="line-numbers">   3 </span> /var/puppet 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Running The Agent</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> sudo puppetd --test --confdir /tmp/server --vardir /tmp/server --server localhost
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> info: Caching catalog at /tmp/server/state/localconfig.yaml
+<span class="line-numbers">   2 </span> notice: Starting catalog run
+<span class="line-numbers">   3 </span> notice: //Node[default]/foo/File[/tmp/foo]/ensure: created
+<span class="line-numbers">   4 </span> notice: Finished catalog run <span class="ControlKeyword">in</span> 0.01 seconds
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Note that we're running as root</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Agent Arguments</h1>
+
+<ul>
+<li><code>--test</code>: Very helpful argument rollup</li>
+<li><code>--confdir /tmp/server</code>: Use a non-standard configuration directory</li>
+<li><code>--vardir /tmp/server</code>: Use a non-standard state/var directory</li>
+<li><code>--server localhost</code>: Specify the server to contact</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Certificates</h1>
+
+<p>This is just Standard SSL(tm).</p>
+
+<ol>
+<li>Generate Certificate Signing Request (CSR)</li>
+<li>Send CSR to server</li>
+<li>Server signs CSR and produces Certificate</li>
+<li>Client retrieves Certificate</li>
+</ol>
+
+
+
+</div><div class='slide'>
+
+<h1>    Welcome to the Certificate Authority</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppetca --confdir /tmp/server/ --vardir /tmp/server --list
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> No certificates to sign
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<ul>
+<li>Try <code>puppetca --print &lt;hostname&gt;</code></li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Signing Client Certificates</h1>
+
+<p>Note the switch to <code>/tmp/client</code>:
+<!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> sudo puppetd --test --confdir /tmp/client --vardir /tmp/client \
+<span class="line-numbers">   2 </span> --server localhost --certname other.madstop.com
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>On the server:<!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> notice: Host other.madstop.com has a waiting certificate request
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> puppetca --confdir /tmp/server/ --vardir /tmp/server --list
+<span class="line-numbers">   2 </span> puppetca --confdir /tmp/server/ --vardir /tmp/server --sign other.madstop.com
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Now run the client again.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>Doing Something Useful</h1>
+
+<p>I always start with <code>sudo</code>.</p>
+
+<p>In <code>repo/modules/sudo/manifests/init.pp</code>:</p>
+
+<p><!-- begin code{:lang=>"puppet"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> 
+<span class="line-numbers">   2 </span> <span class="Storage">class</span> <span class="ClassName">sudo</span> {
+<span class="line-numbers">   3 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/usr/bin/sudo<span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   4 </span>         <span class="UserDefinedConstant">owner </span>=&gt; root,
+<span class="line-numbers">   5 </span>         <span class="UserDefinedConstant">group </span>=&gt; wheel,
+<span class="line-numbers">   6 </span>         <span class="UserDefinedConstant">mode </span>=&gt; 4111
+<span class="line-numbers">   7 </span>     }
+<span class="line-numbers">   8 </span> }
+</pre></pre>
+
+<p><!-- end code --></p>
+
+<p>Add <code>sudo</code> to the default node in <code>site.pp</code>.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Managing Files</h1>
+
+<p>Create your sudoers file at <code>repo/modules/sudo/files/sudoers</code>, then add this to your <code>init.pp</code>:</p>
+
+<p><!-- begin code{:lang=>"puppet"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/etc/sudoers<span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   2 </span>     <span class="UserDefinedConstant">owner </span>=&gt; root,
+<span class="line-numbers">   3 </span>     <span class="UserDefinedConstant">group </span>=&gt; wheel,
+<span class="line-numbers">   4 </span>     <span class="UserDefinedConstant">mode </span>=&gt; 440,
+<span class="line-numbers">   5 </span>     <span class="UserDefinedConstant">source </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>puppet:///sudo/sudoers<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   6 </span> }
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Managing Heterogeneity</h1>
+
+<p><!-- begin code{:lang=>"puppet"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">file</span> { sudo:
+<span class="line-numbers">   2 </span>     <span class="UserDefinedConstant">path </span>=&gt; <span class="Variable"><span class="Punctuation">$</span>operatingsystem</span> ? {
+<span class="line-numbers">   3 </span>         <span class="UserDefinedConstant">darwin </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>/usr/bin/sudo<span class="Punctuation">&quot;</span></span>,
+<span class="line-numbers">   4 </span>         <span class="UserDefinedConstant">default </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>/usr/sbin/sudo<span class="Punctuation">&quot;</span></span>,
+<span class="line-numbers">   5 </span>     },
+<span class="line-numbers">   6 </span>     <span class="UserDefinedConstant">owner </span>=&gt; root,
+<span class="line-numbers">   7 </span>     <span class="UserDefinedConstant">group </span>=&gt; 0,
+<span class="line-numbers">   8 </span>     <span class="UserDefinedConstant">mode </span>=&gt; 4111
+<span class="line-numbers">   9 </span> }
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Facter</h1>
+
+<p><!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> $ facter <span class="KeywordOperator">|</span> wc -l
+<span class="line-numbers">   2 </span>       55
+<span class="line-numbers">   3 </span> $ facter <span class="KeywordOperator">|</span> grep name
+<span class="line-numbers">   4 </span> hostname =<span class="KeywordOperator">&gt;</span> phage
+<span class="line-numbers">   5 </span> macosx_productname =<span class="KeywordOperator">&gt;</span> Mac OS X
+<span class="line-numbers">   6 </span> sp_local_host_name =<span class="KeywordOperator">&gt;</span> phage
+<span class="line-numbers">   7 </span> sp_machine_name =<span class="KeywordOperator">&gt;</span> MacBook
+<span class="line-numbers">   8 </span> sp_user_name =<span class="KeywordOperator">&gt;</span> Luke Kanies <span class="Punctuation">(</span>luke<span class="Punctuation">)</span>
+<span class="line-numbers">   9 </span> $ 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>Other Language Functions</h1>
+
+<p>In general, rely on the tutorial on the wiki, not me</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Relationships</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"repo/modules/rels/manifests/init.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">class</span> <span class="ClassName">rels</span> {
+<span class="line-numbers">   2 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/reltest<span class="Punctuation">&quot;</span></span>: <span class="UserDefinedConstant">ensure </span>=&gt; present }
+<span class="line-numbers">   3 </span>     <span class="Storage">exec</span> { <span class="String"><span class="Punctuation">&quot;</span>/bin/echo got notified<span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   4 </span>         <span class="UserDefinedConstant">subscribe </span>=&gt; File[<span class="String"><span class="Punctuation">&quot;</span>/tmp/reltest<span class="Punctuation">&quot;</span></span>],
+<span class="line-numbers">   5 </span>         <span class="UserDefinedConstant">refreshonly </span>=&gt; true
+<span class="line-numbers">   6 </span>     }
+<span class="line-numbers">   7 </span> }
+</pre></pre>
+
+<div class="codeurl">repo/modules/rels/manifests/init.pp</div>
+
+<p><!-- end code --></p>
+
+<p>Produces: <!-- begin code{:lang=>"shell-unix-generic"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> notice: //rels/File[/tmp/reltest]/ensure: created
+<span class="line-numbers">   2 </span> notice: //rels/Exec[/bin/echo got notified]: Triggering <span class="String"><span class="Punctuation">'</span>refresh<span class="Punctuation">'</span></span> from 1 dependencies 
+</pre></pre>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>Definitions</h1>
+
+<ul>
+<li>Can be considered a 'composite resource'</li>
+<li>A simple way to model resources within Puppet's language</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>    Apache Virtual Hosts</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"repo/modules/apache/manifests/vhost.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">define</span> <span class="FunctionName">apache::vhost</span><span class="Punctuation">(</span><span class="Variable"><span class="Punctuation">$</span>docroot</span>, <span class="Variable"><span class="Punctuation">$</span>ensure</span> <span class="KeywordOperator">=</span> <span class="BuiltInConstant">present</span>) {
+<span class="line-numbers">   2 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/apache/sites/<span class="Variable"><span class="Punctuation">$</span>name</span><span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   3 </span>         <span class="UserDefinedConstant">content </span>=&gt; template(<span class="String"><span class="Punctuation">&quot;</span>apache/vhost.erb<span class="Punctuation">&quot;</span></span>),
+<span class="line-numbers">   4 </span>         <span class="UserDefinedConstant">ensure </span>=&gt; <span class="Variable"><span class="Punctuation">$</span>ensure</span>
+<span class="line-numbers">   5 </span>     }
+<span class="line-numbers">   6 </span> }
+</pre></pre>
+
+<div class="codeurl">repo/modules/apache/manifests/vhost.pp</div>
+
+<p><!-- end code --></p>
+
+<p>Note the qualified definition name.  This is required for correct autoloading.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Using Definitions</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"repo/modules/apache/manifests/init.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">class</span> <span class="ClassName">apache</span> {
+<span class="line-numbers">   2 </span>     apache::vhost { <span class="String"><span class="Punctuation">'</span>reductivelabs.com<span class="Punctuation">'</span></span>:
+<span class="line-numbers">   3 </span>         <span class="UserDefinedConstant">docroot </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>/var/www/reductivelabs.com<span class="Punctuation">&quot;</span></span>
+<span class="line-numbers">   4 </span>     }
+<span class="line-numbers">   5 </span>     apache::vhost { <span class="String"><span class="Punctuation">'</span>foo.com<span class="Punctuation">'</span></span>:
+<span class="line-numbers">   6 </span>         <span class="UserDefinedConstant">docroot </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>/var/www/foo.com<span class="Punctuation">&quot;</span></span>,
+<span class="line-numbers">   7 </span>         <span class="UserDefinedConstant">ensure </span>=&gt; absent
+<span class="line-numbers">   8 </span>     }
+<span class="line-numbers">   9 </span> }
+</pre></pre>
+
+<div class="codeurl">repo/modules/apache/manifests/init.pp</div>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>    Complicated Virtual Host</h1>
+
+<p><!-- begin code{:lang=>"puppet", :name=>"repo/modules/apache/manifests/vhost2.pp"} --></p>
+
+<pre class='code'>
+<pre class="amy"><span class="line-numbers">   1 </span> <span class="Storage">define</span> <span class="FunctionName">apache::vhost2</span><span class="Punctuation">(</span><span class="Variable"><span class="Punctuation">$</span>docroot</span>, <span class="Variable"><span class="Punctuation">$</span>ensure</span> <span class="KeywordOperator">=</span> <span class="BuiltInConstant">present</span>) {
+<span class="line-numbers">   2 </span>     <span class="Variable"><span class="Punctuation">$</span>available</span> =&gt; <span class="Variable"><span class="Punctuation">$</span>ensure</span> ? { <span class="UserDefinedConstant">enabled </span>=&gt; present, <span class="UserDefinedConstant">default </span>=&gt; <span class="Variable"><span class="Punctuation">$</span>ensure</span> }
+<span class="line-numbers">   3 </span>     <span class="Variable"><span class="Punctuation">$</span>enabled</span> =&gt; <span class="Variable"><span class="Punctuation">$</span>ensure</span> ? { <span class="UserDefinedConstant">enabled </span>=&gt; symlink, <span class="UserDefinedConstant">default </span>=&gt; absent }
+<span class="line-numbers">   4 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/apache/sites-available/<span class="Variable"><span class="Punctuation">$</span>name</span><span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   5 </span>         <span class="UserDefinedConstant">content </span>=&gt; template(<span class="String"><span class="Punctuation">&quot;</span>apache/vhost.erb<span class="Punctuation">&quot;</span></span>),
+<span class="line-numbers">   6 </span>         <span class="UserDefinedConstant">ensure </span>=&gt; <span class="Variable"><span class="Punctuation">$</span>available</span>
+<span class="line-numbers">   7 </span>     }
+<span class="line-numbers">   8 </span>     <span class="Storage">file</span> { <span class="String"><span class="Punctuation">&quot;</span>/tmp/apache/sites-enabled/<span class="Variable"><span class="Punctuation">$</span>name</span><span class="Punctuation">&quot;</span></span>:
+<span class="line-numbers">   9 </span>         <span class="UserDefinedConstant">target </span>=&gt; <span class="String"><span class="Punctuation">&quot;</span>/tmp/apache/sites-available/<span class="Variable"><span class="Punctuation">$</span>name</span><span class="Punctuation">&quot;</span></span>,
+<span class="line-numbers">  10 </span>         <span class="UserDefinedConstant">ensure </span>=&gt; <span class="Variable"><span class="Punctuation">$</span>enabled</span>
+<span class="line-numbers">  11 </span>     }
+<span class="line-numbers">  12 </span> }
+</pre></pre>
+
+<div class="codeurl">repo/modules/apache/manifests/vhost2.pp</div>
+
+<p><!-- end code --></p>
+
+
+
+</div><div class='slide'>
+
+<h1>Things We Skipped</h1>
+
+<ul>
+<li>Reporting</li>
+<li>Queueing</li>
+<li>Inheritance</li>
+<li>Storeconfigs</li>
+<li>Export/Collect</li>
+<li>Everything else we didn't cover</li>
+</ul>
+
+
+
+</div><div class='slide'>
+
+<h1>Obligatory Pitch</h1>
+
+<p>Reductive Labs provides support contracts, training, and custom development, and we use all of the revenue to fund development, this kind of talk, and eating.  Well, almost all.</p>
+
+
+
+</div><div class='slide'>
+
+<h1>Conclusion</h1>
+
+<p><img src="images/villain.jpg" alt="The Villain"/></p>
+
+<blockquote>
+    
+</blockquote>
+
+<p>luke@reductivelabs.com</p>
+
+</div>
+</div> <!-- presentation -->
+</body>
+</html>
