@@ -1,22 +1,29 @@
 Introduction to Managed Infrastructures with Puppet
 Goals
 Introduction to Puppet
-Resources
-Language
-Executables
+    Getting Help
+    Resources
+    Language
+    Executables
 Your First Puppet Script
-Your Second Puppet Script
-Puppet Classes
-Including Classes
+    Your Second Puppet Script
+    Puppet Classes
+    Including Classes
 A Puppet Repository
-Your First Module
-Your First Node
-Putting It Together
+    Your First Module
+    Your First Node
+    Putting It Together
 Starting The Server
-Server Arguments
-Default Server Arguments
-Running The Agent
-Agent Arguments
-Certificates
-Welcome to the Certificate Authority
-Signing Client Certificates
+    Server Arguments
+    Default Server Arguments
+    Running The Agent
+    Agent Arguments
+    Certificates
+    Welcome to the Certificate Authority
+    Signing Client Certificates
+Doing Something Useful
+    Managing Files
+    Managing Heterogeneity
+    Facter
+Other Language Functions
+    Relationships
