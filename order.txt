@@ -27,3 +27,10 @@ Doing Something Useful
     Facter
 Other Language Functions
     Relationships
+Definitions
+    Apache Virtual Hosts
+    Using Definitions
+    Complicated Virtual Host
+Things We Skipped
+Obligatory Pitch
+Conclusion

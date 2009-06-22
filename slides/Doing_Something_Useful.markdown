@@ -10,3 +10,5 @@ class sudo {
         mode => 4111
     }
 }<% end %>
+
+Add `sudo` to the default node in `site.pp`.
