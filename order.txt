@@ -10,7 +10,6 @@ Puppet Classes
 Including Classes
 A Puppet Repository
 Your First Module
-# Using the Module
-# Your First Node
-# Managing Sudo
-# Bootstrapping Puppet
+Your First Node
+Putting It Together
+Starting The Server
